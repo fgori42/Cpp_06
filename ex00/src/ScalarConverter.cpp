@@ -93,14 +93,70 @@ static void printChar(std::string str)
 	std::cout << "double : " << static_cast<double>(str[0]) << ".0" << std::endl;
 }
 
-//static void printInt(std::string str)
-//{
-//	if 	
-//}
+static void printInt(int str)
+{
+	char x;
+
+	if 	(std::isprint(str))
+	{
+		x = str;
+		std::cout << "char : '" << x << "'" << std::endl;
+	}
+	else
+		std::cout << "char : '" << "imprintable" << "'" << std::endl;
+	std::cout << "int : " << str << std::endl;	
+	std::cout << "float : " << str << ".0f" << std::endl;
+	std::cout << "double : " << str << ".0" << std::endl;
+}
+
+static void printFloat(float fl)
+{
+
+	int z = fl;
+	char x;
+
+	if 	(std::isprint(z))
+	{
+		x = z;
+		std::cout << "char : '" << x << "'" << std::endl;
+	}
+	else
+		std::cout << "char : '" << "imprintable" << "'" << std::endl;
+	std::cout << "int : " << z << std::endl;	
+	std::cout << "float : " << fl << "f" << std::endl;
+	std::cout << "double : " << fl  << std::endl;
+}
+
+static void printDouble(double fl)
+{
+
+	int z = fl;
+	char x;
+
+	if 	(std::isprint(z))
+	{
+		x = z;
+		std::cout << "char : '" << x << "'" << std::endl;
+	}
+	else
+		std::cout << "char : '" << "imprintable" << "'" << std::endl;
+	std::cout << "int : " << z << std::endl;	
+	std::cout << "float : " << fl << "f" << std::endl;
+	std::cout << "double : " << fl  << std::endl;
+}
 
 void ScalarConverter::convert(std::string str)
 {
-	int	i = checkType(str);
+	std::string check;
+	if (str[0] == '-' && str.length() > 1)
+		check = str.substr(1, str.length());
+	else
+		check = str;
+	int	i = checkType(check);
+	char	*ck;
+	int k;
+	float f;
+	double d;
 	switch (i)
 	{
 		case 0:
@@ -110,16 +166,16 @@ void ScalarConverter::convert(std::string str)
 			printChar(str);
 			break;
 		case 2:
-			//printInt(str);
-			std::cout<< "a";
+			k = std::strtol(str.c_str(), &ck,10);
+			printInt(k);
 			break;
 		case 3:
-			//printFloat(str);
-			std::cout<< "a";
+			f = std::strtof(str.c_str(), &ck);
+			printFloat(f);
 			break;
 		case 4:
-			//printDouble(str);
-			std::cout << "double" << std::endl;
+			d = std::strtod(str.c_str(), &ck); 
+			printDouble(d);
 			break;
 	}
 }
