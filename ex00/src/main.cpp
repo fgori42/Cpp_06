@@ -9,7 +9,7 @@ int main(int ac, char **av)
 	}
 	try
 	{
-		ScalarConverter::convert(std::string (av[1]));
+		ScalarConverter::convert(std::string(av[1]));
 	}
 	catch(const std::exception& e)
 	{

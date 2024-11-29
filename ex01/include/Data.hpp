@@ -1,0 +1,13 @@
+#ifndef DATA_HPP
+# define DATA_HPP
+
+# include <string>
+
+struct Data
+{
+	std::string data;
+	int			nb;	
+};
+
+
+#endif

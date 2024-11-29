@@ -4,7 +4,10 @@
 # include <iostream>
 # include <string>
 # include <stdexcept>
+# include <sstream>
 # include <exception>
+# include <limits>
+# include <limits.h>
 # include <cstdlib> 
 
 class ScalarConverter
@@ -14,18 +17,8 @@ private:
 	ScalarConverter(const ScalarConverter &org);
 	ScalarConverter &operator=(const ScalarConverter &org);
 
-	//static void	printChar(std::string str);
-	//static void	printInt(std::string str);
-	//static void	printFloat(std::string str);
-	//static void	printDouble(std::string str);
 public:
 	~ScalarConverter();
-
-	//class NanValue : public std::exception
-	//{
-	//	public:
-	//		const char *what() const throw();
-	//};
 
 	static void convert(std::string str);
 };

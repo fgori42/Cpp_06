@@ -93,36 +93,63 @@ static void printChar(std::string str)
 	std::cout << "double : " << static_cast<double>(str[0]) << ".0" << std::endl;
 }
 
-static void printInt(int str)
+static std::string conrtStr(void *nb)
 {
-	char x;
+	std::ostringstream oss;
+	oss << nb;
+	return oss.str();
+}
 
-	if 	(std::isprint(str))
+static void printInt(std::string str)
+{
+	std::istringstream in(str);
+	double		i;
+	int			z;
+	char	x;
+	std::string j = "";
+
+	in >> i;
+	if 	(i > 32 && i < 126)
 	{
-		x = str;
+		x = i;
 		std::cout << "char : '" << x << "'" << std::endl;
 	}
 	else
-		std::cout << "char : '" << "imprintable" << "'" << std::endl;
-	std::cout << "int : " << str << std::endl;	
-	std::cout << "float : " << str << ".0f" << std::endl;
-	std::cout << "double : " << str << ".0" << std::endl;
+		std::cout << "char : '" << "non displayable" << "'" << std::endl;
+	if (i < INT_MIN || i > INT_MAX)
+	{
+		std::cout << "int : " << "out of rage" << std::endl;
+		if (!(conrtStr(&i).find('.', 0)))
+			j = ".0";
+		std::cout << "float : " << i << j << "f" << std::endl;
+		std::cout << "double : " << i << j << std::endl;
+	}
+	else
+	{
+		z = i;
+		std::cout << "int : " << z << std::endl;
+		std::cout << "float : " << z << ".0f" << std::endl;
+		std::cout << "double : " << z << ".0" << std::endl;
+	}
 }
 
 static void printFloat(float fl)
 {
 
-	int z = fl;
+	long z = fl;
 	char x;
 
-	if 	(std::isprint(z))
+	if 	(z > 32 && z < 126)
 	{
 		x = z;
 		std::cout << "char : '" << x << "'" << std::endl;
 	}
 	else
-		std::cout << "char : '" << "imprintable" << "'" << std::endl;
-	std::cout << "int : " << z << std::endl;	
+		std::cout << "char : '" << "non displayable" << "'" << std::endl;
+	if (z < INT_MIN || z > INT_MAX)
+		std::cout << "int : " << "out of range" << std::endl;
+	else
+		std::cout << "int : " << z << std::endl;	
 	std::cout << "float : " << fl << "f" << std::endl;
 	std::cout << "double : " << fl  << std::endl;
 }
@@ -130,44 +157,71 @@ static void printFloat(float fl)
 static void printDouble(double fl)
 {
 
-	int z = fl;
+	long z = fl;
 	char x;
 
-	if 	(std::isprint(z))
+	if 	(z > 32 && z < 126)
 	{
 		x = z;
 		std::cout << "char : '" << x << "'" << std::endl;
 	}
 	else
-		std::cout << "char : '" << "imprintable" << "'" << std::endl;
-	std::cout << "int : " << z << std::endl;	
+		std::cout << "char : '" << "non displayable" << "'" << std::endl;
+	if (z < INT_MIN || z > INT_MAX)
+		std::cout << "int : " << "out of range" << std::endl;
+	else
+		std::cout << "int : " << z << std::endl;	
 	std::cout << "float : " << fl << "f" << std::endl;
 	std::cout << "double : " << fl  << std::endl;
+}
+
+static void	printInf(char sing)
+{
+	if 	(sing == '+')
+	{
+		std::cout << "char : '" << "non displayable" << "'" << std::endl;
+	}
+	else
+		std::cout << "char : '" << "impossible" << "'" << std::endl;
+	std::cout << "int : " << sing << "∞" << std::endl;	
+	std::cout << "float : " << sing <<"inff" << std::endl;
+	std::cout << "double : " << sing <<"inf" << std::endl;
+	return ;
+}
+
+static void	printNan(std::string str)
+{
+	if (str == "-inf" || str == "-inff")
+		return printInf('-');
+	if (str == "+inf" || str == "+inff")
+		return printInf('+');
+	std::cout << "char : '" << "impossible" << "'" << std::endl;
+	std::cout << "int : " << "impossible" << std::endl;
+	std::cout << "float : " << "nanf" << std::endl;
+	std::cout << "double : " << "nan" << std::endl;
 }
 
 void ScalarConverter::convert(std::string str)
 {
 	std::string check;
-	if (str[0] == '-' && str.length() > 1)
+	if ((str[0] == '-'|| str[0] == '+') && str.length() > 1)
 		check = str.substr(1, str.length());
 	else
 		check = str;
 	int	i = checkType(check);
 	char	*ck;
-	int k;
 	float f;
 	double d;
 	switch (i)
 	{
 		case 0:
-			std::cout<< "ass";
+			printNan(str);
 			break;
 		case 1:
 			printChar(str);
 			break;
 		case 2:
-			k = std::strtol(str.c_str(), &ck,10);
-			printInt(k);
+			printInt(str);
 			break;
 		case 3:
 			f = std::strtof(str.c_str(), &ck);
